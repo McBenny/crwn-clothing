@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { auth, createUserDocumentFromAuth, createAuthUserWithEmailAndPassword } from "../../utils/firebase/firebase.utils";
+import { createUserDocumentFromAuth, createAuthUserWithEmailAndPassword } from "../../utils/firebase/firebase.utils";
 import FormInput from "../form-input/form-input.component";
 import Button from "../button/button.component";
 import './sign-up-form.styles.scss'
@@ -27,8 +27,7 @@ const SignUpForm = () => {
     event.preventDefault()
     if (displayName !== '' && email !== '' && password !== '' && password === confirmPassword) {
       try {
-        const { user } = await createAuthUserWithEmailAndPassword(email, password);
-        
+        const { user } = await createAuthUserWithEmailAndPassword(email, password);        
         await createUserDocumentFromAuth(user, { displayName });
         resetFormFields()
       } catch (error) {
@@ -61,7 +60,7 @@ const SignUpForm = () => {
         />
         <FormInput
           label="Email"
-          id="email"
+          id="email-sign-up"
           name="email"
           type="email"
           onChange={handleChange}
@@ -70,7 +69,7 @@ const SignUpForm = () => {
         />
         <FormInput
           label="Password"
-          id="password"
+          id="password-sign-up"
           name="password"
           type="password"
           onChange={handleChange}

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { signInWithGooglePopup, signInAuthUserWithEmailAndPassword } from "../../utils/firebase/firebase.utils"
+import { signInWithGooglePopup, signInAuthUserWithEmailAndPassword, createUserDocumentFromAuth } from "../../utils/firebase/firebase.utils"
 // import {
 //   auth,
 //   createUserDocumentFromAuth,
@@ -12,19 +12,27 @@ import "./sign-in-form.styles.scss";
 const defaultFormFields = {
   email: "",
   password: "",
-};
+};  
 
 const SignInForm = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
+  
+  const resetFormFields = () => {
+    setFormFields(defaultFormFields);
+  };
+  
+  const signInWithGoogle = async () => {
+    await signInWithGooglePopup();
+  };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormFields({
       ...formFields,
       [name]: value.trim(),
-    });
-  };
+    });    
+  };    
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -33,8 +41,7 @@ const SignInForm = () => {
       password !== ""
     ) {
       try {
-        const response = await signInAuthUserWithEmailAndPassword(email, password);
-        console.log(response);
+        const { user } = await signInAuthUserWithEmailAndPassword(email, password);
         resetFormFields()
       } catch (error) {
         let message = ''
@@ -45,22 +52,14 @@ const SignInForm = () => {
 
           default:
             message = "Error signing-in with email and password";
-        }
+        }        
         if (message) {
           console.log(message, error.code)
-        }
-      }
+        }    
+      }    
 
-    }
-  };
-
-  const resetFormFields = () => {
-    setFormFields(defaultFormFields);
-  };
-
-  const signInWithGoogle = async () => {
-    const { user } = await signInWithGooglePopup();
-  };
+    }    
+  };    
 
   return (
     <div className="sign-in-container">
@@ -69,7 +68,7 @@ const SignInForm = () => {
       <form onSubmit={handleSubmit}>
         <FormInput
           label="Email"
-          id="email"
+          id="email-sign-in"
           name="email"
           type="email"
           onChange={handleChange}
@@ -78,7 +77,7 @@ const SignInForm = () => {
         />
         <FormInput
           label="Password"
-          id="password"
+          id="password-sign-in"
           name="password"
           type="password"
           onChange={handleChange}
