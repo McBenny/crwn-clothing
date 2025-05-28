@@ -1,18 +1,18 @@
 // Outlet is a placeholder for `<Route />`s nested inside the `<Route />` calling this component
-import { useContext } from "react";
-import { Outlet, Link } from "react-router-dom";
+import { Outlet } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { signOutUser } from '../../utils/firebase/firebase.utils.js'
-import { UserContext } from "../../contexts/user.context";
-import { CartContext } from "../../contexts/cart.context.jsx";
+import { selectCurrentUser } from "../../store/user/user.selector.js";
+import { selectIsCartOpen } from "../../store/cart/cart.selector.js";
 import CartIcon from "../../components/cart-icon/cart-icon.component.jsx";
 // This imports an svg directly in the source
 import { ReactComponent as CrwnLogo } from '../../assets/crown.svg'
-import { NavigationContainer, LogoContainer, NavLink, NavLinks } from "./navigation.styles.jsx";
 import CartDropdown from "../../components/cart-dropdowm/cart-dropdown.component.jsx";
+import { NavigationContainer, LogoContainer, NavLink, NavLinks } from "./navigation.styles.jsx";
 
 const Navigation = () => {
-  const { currentUser } = useContext(UserContext)
-  const { isCartOpen } = useContext(CartContext)
+  const currentUser = useSelector(selectCurrentUser)
+  const isCartOpen = useSelector(selectIsCartOpen)
   
   return (
     <>
@@ -33,25 +33,6 @@ const Navigation = () => {
         </NavLinks>
         {isCartOpen && <CartDropdown />}
       </NavigationContainer>
-      {/* <div className="navigation">
-        <Link className="logo-container" to="/">
-          <CrwnLogo className="logo" />
-        </Link>
-        <div className="nav-links-container">
-          <Link className="nav-link" to="/shop">
-            Shop
-          </Link>
-          {currentUser ? (
-            <span className="nav-link" onClick={signOutUser}>Sign-out</span>
-          ) : (
-            <Link className="nav-link" to="/auth">
-              Sign-in
-            </Link>
-          )}
-          <CartIcon />
-        </div>
-        {isCartOpen && <CartDropdown />}
-      </div> */}
       <Outlet />
     </>
   );
