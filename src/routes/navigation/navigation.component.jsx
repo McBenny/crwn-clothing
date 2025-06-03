@@ -1,8 +1,9 @@
 // Outlet is a placeholder for `<Route />`s nested inside the `<Route />` calling this component
 import { Outlet } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { signOutUser } from '../../utils/firebase/firebase.utils.js'
+import { useSelector, useDispatch } from "react-redux";
+// import { signOutUser } from '../../utils/firebase/firebase.utils.js'
 import { selectCurrentUser } from "../../store/user/user.selector.js";
+import { signOutStart } from "../../store/user/user.action.js";
 import { selectIsCartOpen } from "../../store/cart/cart.selector.js";
 import CartIcon from "../../components/cart-icon/cart-icon.component.jsx";
 // This imports an svg directly in the source
@@ -13,7 +14,9 @@ import { NavigationContainer, LogoContainer, NavLink, NavLinks } from "./navigat
 const Navigation = () => {
   const currentUser = useSelector(selectCurrentUser)
   const isCartOpen = useSelector(selectIsCartOpen)
+  const dispatch = useDispatch()
   
+  const signOutUser = () => dispatch(signOutStart())
   return (
     <>
       <NavigationContainer>

@@ -1,8 +1,7 @@
 import { useEffect } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { setCategories } from '../../store/categories/category.action'
-import { getCategoriesAndDocuments } from '../../utils/firebase/firebase.utils'
+import { fetchCategoriesStart } from '../../store/categories/category.action'
 import CategoriesPreview from '../categories-preview/categories-preview.component'
 import Category from '../category/category.component'
 
@@ -12,11 +11,7 @@ const Shop = () => {
     // To-do once, to upload data in the DB
     // addCollectionAndDocuments('categories', SHOP_DATA)
 
-    const getCategoriesMap = async () => {
-      const categoriesArray = await getCategoriesAndDocuments('categories')      
-      dispatch(setCategories(categoriesArray))
-    }
-    getCategoriesMap()
+    dispatch(fetchCategoriesStart())
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
