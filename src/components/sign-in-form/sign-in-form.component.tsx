@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, FormEvent, ChangeEvent } from "react";
 import { useDispatch } from "react-redux";
 import { googleSignInStart, emailSignInStart } from "../../store/user/user.action";
 import FormInput from "../form-input/form-input.component";
@@ -10,6 +10,9 @@ const defaultFormFields = {
   password: "",
 };  
 
+type ExtendedError = {
+  code: string
+} & Error
 const SignInForm = () => {
   const dispatch = useDispatch()
   const [formFields, setFormFields] = useState(defaultFormFields);
@@ -23,7 +26,7 @@ const SignInForm = () => {
     dispatch(googleSignInStart())
   };
 
-  const handleChange = (event) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setFormFields({
       ...formFields,
@@ -31,7 +34,7 @@ const SignInForm = () => {
     });    
   };    
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (
       email !== "" &&
@@ -42,7 +45,7 @@ const SignInForm = () => {
         resetFormFields()
       } catch (error) {
         let message = ''
-        switch(error.code) {
+        switch((error as ExtendedError).code) {
           case 'auth/invalid-credential':
             message = 'Invalid credentials'
             break;
@@ -51,7 +54,7 @@ const SignInForm = () => {
             message = "Error signing-in with email and password";
         }        
         if (message) {
-          console.log(message, error.code)
+          console.log(message, (error as ExtendedError).code);
         }    
       }    
 
