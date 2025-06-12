@@ -8,6 +8,22 @@ export const ProductCardContainer = styled.div`
   height: 350px;
   align-items: center;
   position: relative;
+
+  img {
+    width: 100%;
+    height: 95%;
+    object-fit: cover;
+    margin-bottom: 5px;
+  }
+
+  button {
+    width: 80%;
+    opacity: 0.7;
+    position: absolute;
+    top: 255px;
+    display: none;
+  }
+
   &:hover {
     img {
       opacity: 0.8;
@@ -15,16 +31,28 @@ export const ProductCardContainer = styled.div`
     button {
       opacity: 0.85;
       display: flex;
+      letter-spacing: -0.05em;
+    }
+  }
+
+  @media screen and (max-width: 800px) {
+    width: 40vw;
+
+    button {
+      display: block;
+      opacity: 0.9;
+      min-width: unset;
+      padding: 0 10px;
+
+      &:hover {
+        img,
+        button {
+          opacity: unset;
+        }
+      }
     }
   }
 `;
-
-export const Img = styled.img`
-  width: 100%;
-  height: 95%;
-  object-fit: cover;
-  margin-bottom: 5px;
-`
 
 export const Footer = styled.div`
   width: 100%;
@@ -41,12 +69,4 @@ export const Name = styled.span`
 
 export const Price = styled.span`
   width: 10%;
-`
-
-export const Button = styled(BaseButton)`
-  width: 80%;
-  opacity: 0.7;
-  position: absolute;
-  top: 255px;
-  display: none;
 `

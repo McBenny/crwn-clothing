@@ -5,7 +5,6 @@ import { selectCartItems } from '../../store/cart/cart.selector';
 
 import {
   ProductCardContainer,
-  Img,
   Footer,
   Name,
   Price,
@@ -25,7 +24,7 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
 
   return (
     <ProductCardContainer>
-      <Img src={imageUrl} alt={`${name}`} />
+      <img src={imageUrl} alt={`${name}`} />
       <Footer>
         <Name>{name}</Name>
         <Price>{price}</Price>
