@@ -2,14 +2,14 @@
 import { Outlet } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 // import { signOutUser } from '../../utils/firebase/firebase.utils.js'
-import { selectCurrentUser } from "../../store/user/user.selector.js";
-import { signOutStart } from "../../store/user/user.action.js";
-import { selectIsCartOpen } from "../../store/cart/cart.selector.js";
-import CartIcon from "../../components/cart-icon/cart-icon.component.jsx";
+import { selectCurrentUser } from "../../store/user/user.selector";
+import { signOutStart } from "../../store/user/user.action";
+import { selectIsCartOpen } from "../../store/cart/cart.selector";
+import CartIcon from "../../components/cart-icon/cart-icon.component";
 // This imports an svg directly in the source
 import { ReactComponent as CrwnLogo } from '../../assets/crown.svg'
-import CartDropdown from "../../components/cart-dropdowm/cart-dropdown.component.jsx";
-import { NavigationContainer, LogoContainer, NavLink, NavLinks } from "./navigation.styles.jsx";
+import CartDropdown from "../../components/cart-dropdowm/cart-dropdown.component";
+import { NavigationContainer, LogoContainer, NavLink, NavLinks } from "./navigation.styles";
 
 const Navigation = () => {
   const currentUser = useSelector(selectCurrentUser)
